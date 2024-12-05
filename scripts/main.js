@@ -51,7 +51,8 @@ let intento_actual = 0
 let password_real = "coder"
 let password_ingresada = prompt("Ingresa la contraseña para acceder como administrador")
 while (password_real !== password_ingresada && intento_actual < limite_intentos) {
-    let password_ingresada = prompt("Ingresa la contraseña para acceder como administrador")
+    password_ingresada = prompt("Ingresa la contraseña para acceder como administrador")
+    intento_actual++
 }
 if (password_ingresada === password_real) {
     do {
@@ -61,26 +62,35 @@ if (password_ingresada === password_real) {
         ingresarProducto()
     }
 
-    alert("¿Qué deseas hacer ahora?")
-    let opcion = prompt("Opciones: \n" + 
-                    "eliminar producto\n" +
-                    "agregar stock\n" +
-                    "modificar precio\n" +
-                    "modificar nombre\n" +
-                    "Para salir: ESC")
+    let opcion = ""
+
     while (opcion !== "ESC") {
+        alert("¿Qué deseas hacer ahora?")
+        opcion = prompt("Opciones: \n" + 
+                        "eliminar producto\n" +
+                        "agregar stock\n" +
+                        "modificar precio\n" +
+                        "modificar nombre\n" +
+                        "Para salir: ESC")
         switch (opcion) {
             case "eliminar producto":
                 eliminarProducto()
                 break;
             case  "agregar stock":
                 agregarStock()
+                break;
             case "modificar precio":
                 modificarPrecio()
+                break;
             case "modificar nombre":
                 modificarNombre()
+                break;
+            case "modificar nombre":
+                alert("Cerrando inventario...")
+                break;
             default:
                 alert("Opcion no disponible");
+                break;
         }
     }
 } else {
