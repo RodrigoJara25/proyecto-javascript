@@ -85,7 +85,7 @@ if (password_ingresada === password_real) {
             case "modificar nombre":
                 modificarNombre()
                 break;
-            case "modificar nombre":
+            case "ESC":
                 alert("Cerrando inventario...")
                 break;
             default:
