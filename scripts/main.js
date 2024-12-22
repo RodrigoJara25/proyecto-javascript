@@ -22,6 +22,11 @@ class Producto{
     }
 
     // Metodos
+    informacionProducto(){
+        let cadena = "Id: " + this.id + 
+                    "\nNombre: " + this.nombre + "\n"
+        return cadena;
+    }
 }
 
 // Clase Categoria (nombre)
@@ -52,7 +57,8 @@ class Categoria {
     
     // Eliminar un Porducto de la Categoria 
     eliminarProducto(){
-        let id = parseInt(prompt("Ingresar id del producto a eliminar"));
+        let cadena = this.imprimirProductos();
+        let id = parseInt(prompt("Productos en esta categoria: \n" + cadena + "\nIngresar id del producto a eliminar"));
         const productoEncontrado = this.array_productos.some((producto) => producto.id == id);
         const productosActualizados = this.array_productos.filter((producto) => producto.id != id);
         this.array_productos = productosActualizados;
@@ -120,9 +126,18 @@ class Categoria {
             console.log(producto_modificar_nombre);
         }
     }
+
+    // Imprimir productos dentro de esta categoria
+    imprimirProductos() {
+        let cadena = ""
+        for (const producto of this.array_productos) {
+            cadena += "- " + producto.nombre + ": " + producto.id + "\n";
+        }
+        return cadena;
+    }
 }
 
-// Clase Pedido
+/* // Clase Pedido
 class Pedido {
     // Inicializacion
     cantidad = 0;
@@ -146,7 +161,7 @@ class Factura {
     dni_cliente = "000000000"
     nombre_cliente = ""
     
-}
+} */
 
 
 
@@ -167,7 +182,13 @@ function crearCategoria(){
     return categoria;
 }
 
-/*
+// ============================= VARIABLES =============================
+// Array de las Categorias creadas
+const array_categorias = []
+// Array de los Productos creados
+const array_productos = []
+
+// ============================= EJECUCION DEL CODIGO =============================
 alert("Bienvenido al sistema de inventario")
 let limite_intentos = 3
 let intento_actual = 0
@@ -178,34 +199,68 @@ while (password_real !== password_ingresada && intento_actual < limite_intentos)
     intento_actual++
 }
 if (password_ingresada === password_real) {
-    do {
-        cantidad_productos = prompt("¿Cuantos productos deseas ingresar?")
-    } while (cantidad_productos < 0);
-    for (let i = 0; i < cantidad_productos; i++) {
-        ingresarProducto()
-    }
-
     let opcion = ""
-
-    while (opcion !== "ESC") {
-        alert("¿Qué deseas hacer ahora?")
+    do {
+        alert("¿Que deseas hacer?")
         opcion = prompt("Opciones: \n" + 
-                        "eliminar producto\n" +
-                        "agregar stock\n" +
-                        "modificar precio\n" +
-                        "modificar nombre\n" +
+                        "1. Crear una categoria \n" + 
+                        "2. Crear un producto\n" +
+                        "3. Agregar producto a una categoria\n" + 
+                        "4. Eliminar producto de una categoria\n" +
+                        "5. Agregar stock\n" +
+                        "6. Modificar precio\n" +
+                        "7. Modificar nombre\n" +
                         "Para salir: ESC")
+        
+        let nombre_categoria = "";
+
         switch (opcion) {
-            case "eliminar producto":
-                eliminarProducto()
+            case "1":
+                let categoria = crearCategoria();
+                array_categorias.push(categoria);
                 break;
-            case  "agregar stock":
-                agregarStock()
+            case "2":
+                let producto = crearProducto();
+                array_productos.push(producto);
                 break;
-            case "modificar precio":
+            case "3":
+                let cadena = "";
+                for (const producto of array_productos) {
+                    cadena += producto.informacionProducto()
+                }
+                let nombre_producto = prompt("¿Que producto quieres agregar?\n" + cadena + "\nEscribe el nombre: " );
+                let producto_elegido = array_productos.find((producto) => producto.nombre == nombre_producto)
+                
+                cadena = "";
+                for (const categoria of array_categorias) {
+                    cadena += "- " + categoria.nombre + "\n"
+                }
+                nombre_categoria = prompt("A que categoria deseas agregar? \n" + cadena + "\nEscribe el nombre: ");
+                categoria_elegida = array_categorias.find((categoria) => categoria.nombre == nombre_categoria);
+
+                // Agregamos el producto a la categoria elegida
+                categoria_elegida.ingresarProducto(producto_elegido);
+                break;
+            case  "4":
+                let cadena2 = "";
+                for (const categoria of array_categorias) {
+                    cadena2 += "- " + categoria.nombre + "\n"
+                }
+                nombre_categoria = prompt("Que categoria deseas elegir? \n" + cadena2 + "\nEscribe el nombre: ");
+                categoria_elegida = array_categorias.find((categoria) => categoria.nombre == nombre_categoria);
+                if (categoria_elegida == undefined) {
+                    alert("Categoria no encontrada")
+                } else {
+                    categoria_elegida.eliminarProducto()   
+                }
+                break;
+            case "5":
                 modificarPrecio()
                 break;
-            case "modificar nombre":
+            case "6":
+                modificarNombre()
+                break;
+            case "7":
                 modificarNombre()
                 break;
             case "ESC":
@@ -215,18 +270,17 @@ if (password_ingresada === password_real) {
                 alert("Opcion no disponible");
                 break;
         }
-    }
+    } while (opcion !== "ESC");
 } else {
     alert("Limite de intentos excedido")
 }
- */
 
-const cat_frutas = new Categoria("Frutas");
+/* const cat_frutas = new Categoria("Frutas");
 const producto1 = new Producto("Manzana", 5, 5);
 const producto2 = new Producto("Pera", 7, 7);
 const producto3 = new Producto("Durazno", 2, 2);
 cat_frutas.ingresarProducto(producto1);
 cat_frutas.ingresarProducto(producto2);
 cat_frutas.ingresarProducto(producto3);
-// cat_frutas.modificarNombre();
+cat_frutas.modificarNombre(); */
 
