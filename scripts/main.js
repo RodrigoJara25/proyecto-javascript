@@ -75,7 +75,8 @@ class Categoria {
 
     // Agregar Stock de un Producto
     agregarStock(){
-        let id = parseInt(prompt("Ingresar el id del producto a aumentar stock"))
+        let cadena = this.imprimirProductos();
+        let id = parseInt(prompt("Productos en esta categoria: \n" + cadena + "Ingresar el id del producto a aumentar stock"))
         const producto_agregar_stock = this.array_productos.find((producto) => producto.id === id)
         if (producto_agregar_stock == undefined) {
             alert("Producto no encontrado")
@@ -255,7 +256,17 @@ if (password_ingresada === password_real) {
                 }
                 break;
             case "5":
-                modificarPrecio()
+                let cadena3 = "";
+                for (const categoria of array_categorias) {
+                    cadena3 += "- " + categoria.nombre + "\n"
+                }
+                nombre_categoria = prompt("Que categoria deseas elegir? \n" + cadena3 + "\nEscribe el nombre: ");
+                categoria_elegida = array_categorias.find((categoria) => categoria.nombre == nombre_categoria);
+                if (categoria_elegida == undefined) {
+                    alert("Categoria no encontrada")
+                } else {
+                    categoria_elegida.agregarStock() 
+                }
                 break;
             case "6":
                 modificarNombre()
