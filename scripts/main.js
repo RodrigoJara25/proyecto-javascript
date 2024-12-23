@@ -94,7 +94,8 @@ class Categoria {
 
     // Modificar el Precio de un Producto
     modificarPrecio(){
-        let id = parseInt(prompt("Ingresar el id del producto a modificar precio"))
+        let cadena = this.imprimirProductos();
+        let id = parseInt(prompt("Productos en esta categoria: \n" + cadena + "Ingresar el id del producto a modificar precio"))
         const producto_modificar_precio = this.array_productos.find((producto) => producto.id === id)
         if (producto_modificar_precio == undefined) {
             alert("Producto no encontrado")
@@ -114,7 +115,8 @@ class Categoria {
 
     // Modificar el nombre de un producto
     modificarNombre(){
-        let id = parseInt(prompt("Ingresar el id del producto a modificar el nombre"));
+        let cadena = this.imprimirProductos();
+        let id = parseInt(prompt("Productos en esta categoria: \n" + cadena + "Ingresar el id del producto a modificar el nombre"));
         const producto_modificar_nombre = this.array_productos.find((producto) => producto.id === id)
         if (producto_modificar_nombre == undefined) {
             alert("Producto no encontrado")
@@ -269,10 +271,30 @@ if (password_ingresada === password_real) {
                 }
                 break;
             case "6":
-                modificarNombre()
+                let cadena4 = "";
+                for (const categoria of array_categorias) {
+                    cadena4 += "- " + categoria.nombre + "\n"
+                }
+                nombre_categoria = prompt("Que categoria deseas elegir? \n" + cadena4 + "\nEscribe el nombre: ");
+                categoria_elegida = array_categorias.find((categoria) => categoria.nombre == nombre_categoria);
+                if (categoria_elegida == undefined) {
+                    alert("Categoria no encontrada")
+                } else {
+                    categoria_elegida.modificarPrecio()
+                }
                 break;
             case "7":
-                modificarNombre()
+                let cadena5 = "";
+                for (const categoria of array_categorias) {
+                    cadena5 += "- " + categoria.nombre + "\n"
+                }
+                nombre_categoria = prompt("Que categoria deseas elegir? \n" + cadena5 + "\nEscribe el nombre: ");
+                categoria_elegida = array_categorias.find((categoria) => categoria.nombre == nombre_categoria);
+                if (categoria_elegida == undefined) {
+                    alert("Categoria no encontrada")
+                } else {
+                    categoria_elegida.modificarNombre()
+                }
                 break;
             case "ESC":
                 alert("Cerrando inventario...")
