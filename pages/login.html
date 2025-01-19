@@ -26,31 +26,30 @@
                     <i class="fa-regular fa-user fa-3x icono-image d-flex justify-content-center align-items-center"></i>
                 </div>
                 <div class="d-flex justify-content-center">
-                  <form>
+                  <form id="formulario-login">
                     <div class="input-group mt-3">
                       <div class="input-group-append">
                         <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
                       </div>
-                      <input type="text" name="usuario" class="form-control input-user" placeholder="usuario">
+                      <input type="text" name="usuario" class="form-control input-user" id="usuario" placeholder="usuario">
                     </div>
                     <div class="input-group mt-3">
                       <div class="input-group-append">
                         <span class="input-group-text"><i class="fa-solid fa-key"></i></span>
                       </div>
-                      <input type="text" name="usuario" class="form-control input-user" placeholder="password">
+                      <input type="password" name="usuario" class="form-control input-user" id="password" placeholder="password">
                     </div>
       
                     <div class="form-group mt-3">
-                      <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="check-recuerdame">
-                        <label class="custom-control-label" for="check-recuerdame">Recuerdame</label>
+                      <div class="custom-control" id="cantidad-intentos">
+                        Intentos restantes: 3
                       </div>
                     </div>
       
                     <div class="row mt-3">
                       <div class="col">
                         <div class="d-flex justify-content-center mt-1">
-                          <button type="button" name="Ingresar" class="btn btn-secondary">Ingresar</button>
+                          <button type="submit" name="Ingresar" class="btn btn-secondary" id="formulario-submit">Ingresar</button>
                         </div>
                       </div>
                     </div>
@@ -58,8 +57,11 @@
                   </form>
                 </div>
               </div>
+              <!-- mensaje flotante -->
+              <div id="mensaje" style="display: none; text-align: center; border-radius: 5px;"></div>
             </div>
-          </div>
+        </div>
+
     </main>
     <footer>
 
