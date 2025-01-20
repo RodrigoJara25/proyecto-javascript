@@ -1,3 +1,39 @@
+/* Pagina Index */
+
+
+.titulo{
+    text-align: center;
+}
+
+section{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.container-div-principal{
+    width: 50%;
+}
+
+.container-div{
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.div-card{
+    border: 2px solid black;
+    padding: 10px;
+}
+
+
+
+
+
+
+
+/* Pagina Login */
+
 .mi-css-table{
     background-color: #f6f6f6;
     height: 40px;
