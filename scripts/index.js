@@ -180,7 +180,7 @@ function crearProducto(){
 
 // Crear Categoria de Producto
 function crearCategoria(){
-    let nombre = prompt("Ingresar nombre de la categoria del producto");
+    let nombre = document.getElementById("nombre-categoria").value;
     const categoria = new Categoria(nombre);
     return categoria;
 }
@@ -192,121 +192,136 @@ const array_categorias = []
 const array_productos = []
 
 // ============================= EJECUCION DEL CODIGO =============================
-alert("Bienvenido al sistema de inventario")
-let limite_intentos = 3
-let intento_actual = 0
-let password_real = "coder"
-let password_ingresada = prompt("Ingresa la contraseña para acceder como administrador")
-while (password_real !== password_ingresada && intento_actual < limite_intentos) {
-    password_ingresada = prompt("Ingresa la contraseña para acceder como administrador")
-    intento_actual++
-}
-if (password_ingresada === password_real) {
-    let opcion = ""
-    do {
-        alert("¿Que deseas hacer?")
-        opcion = prompt("Opciones: \n" + 
-                        "1. Crear una categoria \n" + 
-                        "2. Crear un producto\n" +
-                        "3. Agregar producto a una categoria\n" + 
-                        "4. Eliminar producto de una categoria\n" +
-                        "5. Agregar stock\n" +
-                        "6. Modificar precio\n" +
-                        "7. Modificar nombre\n" +
-                        "Para salir: ESC")
-        
-        let nombre_categoria = "";
+// alert("Bienvenido al sistema de inventario")
 
-        switch (opcion) {
-            case "1":
+// Seleccionamos el formulario donde se marca la opcion que se quiere hacer
+let formularioOpcion = document.getElementById("formulario-opcion")
+
+// Preparamos el formulario que se va a generar segun la opcion que se elija de manera dinamica
+let contenedorNuevoFormulario = document.getElementById("formulario-opciones");
+
+// Cuando el formulario de opciones sea enviado (submit) verificamos cual fue la opcion enviada
+formularioOpcion.addEventListener("submit", (event)=>{
+    event.preventDefault();
+
+    // Creamos un formulario cada vez que se seleccione una opcion
+    let formulario = document.createElement("form");
+    formulario.setAttribute("id", "formulario-dinamico")
+    contenedorNuevoFormulario.append(formulario);
+    let form = document.getElementById("formulario-dinamico")
+
+    let opcion = document.getElementById("opcion").value;   // Agarramos el valor del input (que va a ser el numero de la opcion)
+
+    switch (opcion) {
+        // Si es la opcion "1", entonces creamos un formulario dentro del contenedor formulario con los campos necesarios (nombre de la categoria)
+        case "1":
+            formulario.innerHTML = `<label for="nombre-categoria">Nombre de la Categoría</label>
+                                    <input type="text" id="nombre-categoria" name="nombre-categoria" placeholder="Ingrese el nombre de la categoría" required>
+                                    <button type="submit">Guardar</button>`
+            // Cuando ese nuevo formulario dinamico sea enviado (submit), creamos la categoria con sus datos
+            form.addEventListener("submit", (event) => {
+                event.preventDefault()
                 let categoria = crearCategoria();
                 array_categorias.push(categoria);
-                break;
-            case "2":
-                let producto = crearProducto();
-                array_productos.push(producto);
-                break;
-            case "3":
-                let cadena = "";
-                for (const producto of array_productos) {
-                    cadena += producto.informacionProducto()
-                }
-                let nombre_producto = prompt("¿Que producto quieres agregar?\n" + cadena + "\nEscribe el nombre: " );
-                let producto_elegido = array_productos.find((producto) => producto.nombre == nombre_producto)
-                
-                cadena = "";
-                for (const categoria of array_categorias) {
-                    cadena += "- " + categoria.nombre + "\n"
-                }
-                nombre_categoria = prompt("A que categoria deseas agregar? \n" + cadena + "\nEscribe el nombre: ");
-                categoria_elegida = array_categorias.find((categoria) => categoria.nombre == nombre_categoria);
+                console.log("Categoria agregada:" + categoria.nombre)
+                formulario.remove();    // eliminamos el formulario luego de usarlo para que se vuyelva a generar cuando sea encesario
+            })
+            break;
+        case "2":
+            let producto = crearProducto();
+            array_productos.push(producto);
+            break;
+        case "3":
+            let cadena = "";
+            for (const producto of array_productos) {
+                cadena += producto.informacionProducto()
+            }
+            let nombre_producto = prompt("¿Que producto quieres agregar?\n" + cadena + "\nEscribe el nombre: " );
+            let producto_elegido = array_productos.find((producto) => producto.nombre == nombre_producto)
+            
+            cadena = "";
+            for (const categoria of array_categorias) {
+                cadena += "- " + categoria.nombre + "\n"
+            }
+            nombre_categoria = prompt("A que categoria deseas agregar? \n" + cadena + "\nEscribe el nombre: ");
+            categoria_elegida = array_categorias.find((categoria) => categoria.nombre == nombre_categoria);
+    
+            // Agregamos el producto a la categoria elegida
+            categoria_elegida.ingresarProducto(producto_elegido);
+            break;
+        case  "4":
+            let cadena2 = "";
+            for (const categoria of array_categorias) {
+                cadena2 += "- " + categoria.nombre + "\n"
+            }
+            nombre_categoria = prompt("Que categoria deseas elegir? \n" + cadena2 + "\nEscribe el nombre: ");
+            categoria_elegida = array_categorias.find((categoria) => categoria.nombre == nombre_categoria);
+            if (categoria_elegida == undefined) {
+                alert("Categoria no encontrada")
+            } else {
+                categoria_elegida.eliminarProducto()   
+            }
+            break;
+        case "5":
+            let cadena3 = "";
+            for (const categoria of array_categorias) {
+                cadena3 += "- " + categoria.nombre + "\n"
+            }
+            nombre_categoria = prompt("Que categoria deseas elegir? \n" + cadena3 + "\nEscribe el nombre: ");
+            categoria_elegida = array_categorias.find((categoria) => categoria.nombre == nombre_categoria);
+            if (categoria_elegida == undefined) {
+                alert("Categoria no encontrada")
+            } else {
+                categoria_elegida.agregarStock() 
+            }
+            break;
+        case "6":
+            let cadena4 = "";
+            for (const categoria of array_categorias) {
+                cadena4 += "- " + categoria.nombre + "\n"
+            }
+            nombre_categoria = prompt("Que categoria deseas elegir? \n" + cadena4 + "\nEscribe el nombre: ");
+            categoria_elegida = array_categorias.find((categoria) => categoria.nombre == nombre_categoria);
+            if (categoria_elegida == undefined) {
+                alert("Categoria no encontrada")
+            } else {
+                categoria_elegida.modificarPrecio()
+            }
+            break;
+        case "7":
+            let cadena5 = "";
+            for (const categoria of array_categorias) {
+                cadena5 += "- " + categoria.nombre + "\n"
+            }
+            nombre_categoria = prompt("Que categoria deseas elegir? \n" + cadena5 + "\nEscribe el nombre: ");
+            categoria_elegida = array_categorias.find((categoria) => categoria.nombre == nombre_categoria);
+            if (categoria_elegida == undefined) {
+                alert("Categoria no encontrada")
+            } else {
+                categoria_elegida.modificarNombre()
+            }
+            break;
+        default:
+            alert("Opcion no disponible");
+            break;
+    }
 
-                // Agregamos el producto a la categoria elegida
-                categoria_elegida.ingresarProducto(producto_elegido);
-                break;
-            case  "4":
-                let cadena2 = "";
-                for (const categoria of array_categorias) {
-                    cadena2 += "- " + categoria.nombre + "\n"
-                }
-                nombre_categoria = prompt("Que categoria deseas elegir? \n" + cadena2 + "\nEscribe el nombre: ");
-                categoria_elegida = array_categorias.find((categoria) => categoria.nombre == nombre_categoria);
-                if (categoria_elegida == undefined) {
-                    alert("Categoria no encontrada")
-                } else {
-                    categoria_elegida.eliminarProducto()   
-                }
-                break;
-            case "5":
-                let cadena3 = "";
-                for (const categoria of array_categorias) {
-                    cadena3 += "- " + categoria.nombre + "\n"
-                }
-                nombre_categoria = prompt("Que categoria deseas elegir? \n" + cadena3 + "\nEscribe el nombre: ");
-                categoria_elegida = array_categorias.find((categoria) => categoria.nombre == nombre_categoria);
-                if (categoria_elegida == undefined) {
-                    alert("Categoria no encontrada")
-                } else {
-                    categoria_elegida.agregarStock() 
-                }
-                break;
-            case "6":
-                let cadena4 = "";
-                for (const categoria of array_categorias) {
-                    cadena4 += "- " + categoria.nombre + "\n"
-                }
-                nombre_categoria = prompt("Que categoria deseas elegir? \n" + cadena4 + "\nEscribe el nombre: ");
-                categoria_elegida = array_categorias.find((categoria) => categoria.nombre == nombre_categoria);
-                if (categoria_elegida == undefined) {
-                    alert("Categoria no encontrada")
-                } else {
-                    categoria_elegida.modificarPrecio()
-                }
-                break;
-            case "7":
-                let cadena5 = "";
-                for (const categoria of array_categorias) {
-                    cadena5 += "- " + categoria.nombre + "\n"
-                }
-                nombre_categoria = prompt("Que categoria deseas elegir? \n" + cadena5 + "\nEscribe el nombre: ");
-                categoria_elegida = array_categorias.find((categoria) => categoria.nombre == nombre_categoria);
-                if (categoria_elegida == undefined) {
-                    alert("Categoria no encontrada")
-                } else {
-                    categoria_elegida.modificarNombre()
-                }
-                break;
-            case "ESC":
-                alert("Cerrando inventario...")
-                break;
-            default:
-                alert("Opcion no disponible");
-                break;
-        }
-    } while (opcion !== "ESC");
-} else {
-    alert("Limite de intentos excedido")
-}
+})
+
+/* alert("¿Que deseas hacer?")
+opcion = prompt("Opciones: \n" + 
+                "1. Crear una categoria \n" + 
+                "2. Crear un producto\n" +
+                "3. Agregar producto a una categoria\n" + 
+                "4. Eliminar producto de una categoria\n" +
+                "5. Agregar stock\n" +
+                "6. Modificar precio\n" +
+                "7. Modificar nombre\n" +
+                "Para salir: ESC")
+
+let nombre_categoria = ""; */
+
+
 
 /* const cat_frutas = new Categoria("Frutas");
 const producto1 = new Producto("Manzana", 5, 5);
