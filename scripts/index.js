@@ -171,9 +171,9 @@ class Factura {
 // ============================= FUNCIONES =============================
 // Crear un Producto
 function crearProducto(){
-    let nombre = prompt("Ingresar nombre del producto");
-    let cantidad = parseInt(prompt("Ingresar cantidad del producto"));
-    let precio = parseInt(prompt("Ingresar precio del producto"));
+    let nombre = document.getElementById("nombre-producto").value
+    let cantidad = document.getElementById("cantidad-producto").value;
+    let precio = document.getElementById("precio-producto").value;
     const producto = new Producto(nombre, cantidad, precio);
     return producto;
 }
@@ -208,13 +208,16 @@ formularioOpcion.addEventListener("submit", (event)=>{
     let formulario = document.createElement("form");
     formulario.setAttribute("id", "formulario-dinamico")
     contenedorNuevoFormulario.append(formulario);
-    let form = document.getElementById("formulario-dinamico")
+    let form = ""
 
     let opcion = document.getElementById("opcion").value;   // Agarramos el valor del input (que va a ser el numero de la opcion)
 
     switch (opcion) {
         // Si es la opcion "1", entonces creamos un formulario dentro del contenedor formulario con los campos necesarios (nombre de la categoria)
         case "1":
+            // Asignamos el formulario dentro del contenedor (que es la section)
+            contenedorNuevoFormulario.append(formulario);
+            form = document.getElementById("formulario-dinamico")
             formulario.innerHTML = `<label for="nombre-categoria">Nombre de la Categoría</label>
                                     <input type="text" id="nombre-categoria" name="nombre-categoria" placeholder="Ingrese el nombre de la categoría" required>
                                     <button type="submit">Guardar</button>`
@@ -228,13 +231,34 @@ formularioOpcion.addEventListener("submit", (event)=>{
             })
             break;
         case "2":
-            let producto = crearProducto();
-            array_productos.push(producto);
+            contenedorNuevoFormulario.append(formulario);
+            form = document.getElementById("formulario-dinamico")
+            formulario.innerHTML = `
+                <label for="nombre-producto">Nombre del Producto</label>
+                <input type="text" id="nombre-producto" name="nombre-producto" placeholder="Ingrese el nombre del producto" required><br>
+
+                <label for="cantidad-producto">Cantidad</label>
+                <input type="number" id="cantidad-producto" name="cantidad-producto" placeholder="Ingrese la cantidad" min="1" required><br>
+
+                <label for="precio-producto">Precio</label>
+                <input type="number" id="precio-producto" name="precio-producto" placeholder="Ingrese el precio" min="0.01" step="0.01" required><br>
+
+                <button type="submit">Guardar</button>
+            `;
+            form.addEventListener("submit", (event) => {
+                event.preventDefault()
+                let producto = crearProducto();
+                array_productos.push(producto);
+                console.log("Producto agregado:" + producto.nombre)
+                console.log("Cantidad:" + producto.cantidad)
+                console.log("Precio:" + producto.precio)
+                formulario.remove();    // eliminamos el formulario luego de usarlo para que se vuyelva a generar cuando sea encesario
+            })
             break;
         case "3":
             let cadena = "";
             for (const producto of array_productos) {
-                cadena += producto.informacionProducto()
+                cadena += producto.informacionProducto();
             }
             let nombre_producto = prompt("¿Que producto quieres agregar?\n" + cadena + "\nEscribe el nombre: " );
             let producto_elegido = array_productos.find((producto) => producto.nombre == nombre_producto)
