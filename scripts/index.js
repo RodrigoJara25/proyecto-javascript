@@ -42,6 +42,100 @@ let formularioOpcion = document.getElementById("formulario-opcion")
 // Preparamos el formulario que se va a generar segun la opcion que se elija de manera dinamica
 let contenedorNuevoFormulario = document.getElementById("formulario-opciones");
 
+// Cargamos los datos de la "API" y los mostramos en la interfaz
+
+// 1) Mostramos Prodcutos
+let postsProducts = document.getElementById("mostrarProductos") 
+fetch('/mocks/productos.json')
+    .then((response) => response.json())
+    .then((data) => {
+        array_productos = data.map(prod => new Producto(prod.nombre, prod.cantidad, prod.precio));
+        console.log("--> Datos decodificados <--", data);
+        /* {
+        "id": 0,
+        "nombre": "Manzana",
+        "cantidad": 100,
+        "precio": 1.5
+        },*/
+        array_productos.forEach((post) => {
+            let register = document.createElement("div")
+            register.setAttribute("class", "divCard")
+            register.innerHTML = `
+                <h3>Nombre: ${post.nombre}</h3>
+                <p>ID: ${post.id}</p>
+                <p>Cantidad: ${post.cantidad}</p>
+                <p>Precio: ${post.precio}</p>
+            `;
+            postsProducts.append(register);
+        })
+    })
+    .catch( (error) => {
+        Swal.fire({
+            title: "?",
+            text: "A ocurrido error al cargar los productos",
+            icon: "question"
+          });
+    })
+    .finally(()=>{
+        guardarProductos();
+    });
+
+// 2) Mostramos Categorias
+let postsCategories = document.getElementById("mostrarCategorias") 
+fetch('/mocks/categorias.json')
+    .then((response) => response.json())
+    .then((data) => {
+        array_categorias = data.map(cat => new Categoria(cat.nombre));
+        array_categorias_productos = data.map(cat => (cat.array_productos));
+        for (let i = 0; i < array_categorias.length; i++) {
+            if (array_categorias_productos[i]) {
+                array_categorias[i].array_productos = array_categorias_productos[i]; // Asiganmos a la primer categoria el array de sus productos correspndientes. Asi sucesivamente.
+            }
+        }
+        console.log("--> Datos decodificados <--", data);
+        /* {
+        "nombre": "Frutas",
+        "array_productos": [
+            {
+                "id": 0,
+                "nombre": "Manzana",
+                "cantidad": 100,
+                "precio": 1.5
+            },
+            {
+                "id": 1,
+                "nombre": "Banana",
+                "cantidad": 150,
+                "precio": 0.9
+            },
+        ]
+        },*/
+        array_categorias.forEach((post) => {
+            let register = document.createElement("div")
+            register.setAttribute("class", "divCard")
+            register.innerHTML = `
+                <h2>Categoria: ${post.nombre}</h2>
+                <h3>Productos en la Categoria:</h3>
+            `;
+            post.array_productos.forEach((producto) =>{
+                register.innerHTML += `
+                    <p>Producto: ${producto.nombre}</p>
+                `;
+            })
+            postsCategories.append(register);
+        })
+    })
+    .catch( (error) => {
+        Swal.fire({
+            title: "?",
+            text: "A ocurrido error al cargar las categorias",
+            icon: "question"
+          });
+    })
+    .finally(()=>{
+        guardarCategorias();
+    });
+
 // Cargamos del localStorage los productos y categorias (si es que hubieran)
 cargarCategorias();
 cargarProductos();
@@ -256,17 +350,3 @@ formularioOpcion.addEventListener("submit", (event)=>{
     }
 
 })
-
-
-/* const cat_frutas = new Categoria("Frutas");
-const producto1 = new Producto("Manzana", 5, 5);
-const producto2 = new Producto("Pera", 7, 7);
-const producto3 = new Producto("Durazno", 2, 2);
-array_categorias.push(cat_frutas);
-array_productos.push(producto1);
-array_productos.push(producto2);
-array_productos.push(producto3);
-cat_frutas.ingresarProducto(producto1);
-cat_frutas.ingresarProducto(producto2);
-cat_frutas.ingresarProducto(producto3); */
-
