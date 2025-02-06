@@ -83,6 +83,13 @@ class Categoria {
             formulario.remove();
             listaProductos.remove();
             elegirProducto.remove();
+
+            // Actualizamos los arrays de productos y categorias
+            guardarProductos();
+            guardarCategorias();
+            // Recargamos el HTML
+            mostrarInterfazProductos();
+            mostrarInterfazCategorias();
         });
     }
 

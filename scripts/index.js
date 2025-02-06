@@ -360,6 +360,7 @@ formularioOpcion.addEventListener("submit", (event)=>{
             `;
             // debugger
             form.addEventListener("submit", (event) => {
+                event.preventDefault();
                 nombre_categoria = document.getElementById("nombre-categoria").value;
                 categoria_elegida = array_categorias.find((categoria) => categoria.nombre == nombre_categoria);
                 if (categoria_elegida == undefined) {
@@ -373,13 +374,13 @@ formularioOpcion.addEventListener("submit", (event)=>{
                     listaCategorias2.remove()   
                 }
                 formulario.remove();  // Eliminamos el formulario luego de usarlo para que se vuelva a generar cuando sea necesario
+                /* // Actualizamos los arrays de productos y categorias
+                guardarProductos();
+                guardarCategorias();
+                // Recargamos el HTML
+                mostrarInterfazProductos();
+                mostrarInterfazCategorias(); */
             });
-            // Actualizamos los arrays de productos y categorias
-            guardarProductos();
-            guardarCategorias();
-            // Recargamos el HTML
-            mostrarInterfazProductos();
-            mostrarInterfazCategorias();
             break;
         default:
             Swal.fire({
