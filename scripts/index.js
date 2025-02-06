@@ -21,6 +21,40 @@ function crearCategoria(){
     return categoria;
 }
 
+
+function mostrarInterfazProductos(){
+    postsProducts.innerHTML = "";
+    array_productos.forEach((post) => {
+        let register = document.createElement("div")
+        register.setAttribute("class", "divCard")
+        register.innerHTML = `
+            <h3>Nombre: ${post.nombre}</h3>
+            <p>ID: ${post.id}</p>
+            <p>Cantidad: ${post.cantidad}</p>
+            <p>Precio: ${post.precio}</p>
+        `;
+        postsProducts.append(register);
+    })
+}
+
+function mostrarInterfazCategorias(){
+    postsCategories.innerHTML = ""
+    array_categorias.forEach((post) => {
+        let register = document.createElement("div")
+        register.setAttribute("class", "divCard")
+        register.innerHTML = `
+            <h2>Categoria: ${post.nombre}</h2>
+            <h3>Productos en la Categoria:</h3>
+        `;
+        post.array_productos.forEach((producto) =>{
+            register.innerHTML += `
+                <p>Producto: ${producto.nombre}</p>
+            `;
+        })
+        postsCategories.append(register);
+    })
+}
+
 // ============================ Storage y JSON ========================
 // cargarProductos()
 // guardarProductos()
@@ -44,12 +78,21 @@ let contenedorNuevoFormulario = document.getElementById("formulario-opciones");
 
 // Cargamos los datos de la "API" y los mostramos en la interfaz
 
-// 1) Mostramos Prodcutos
+// 1) Cargamos Prodcutos
 let postsProducts = document.getElementById("mostrarProductos") 
 fetch('/mocks/productos.json')
     .then((response) => response.json())
     .then((data) => {
-        array_productos = data.map(prod => new Producto(prod.nombre, prod.cantidad, prod.precio));
+        cargarProductos();
+        console.log(array_productos);
+        // let array_productos_JSON = data.map(prod => new Producto(prod.nombre, prod.cantidad, prod.precio));
+        let array_productos_JSON = data;
+        console.log("array_productos_JSON: ", array_productos_JSON);
+        array_productos_JSON.forEach((producto_json)=>{
+            if (!array_productos.some(producto_storage => producto_storage.nombre === producto_json.nombre)) {
+                array_productos.push(new Producto(producto_json.nombre, producto_json.cantidad, producto_json.precio))
+            }
+        })
         console.log("--> Datos decodificados <--", data);
         /* {
         "id": 0,
@@ -57,41 +100,40 @@ fetch('/mocks/productos.json')
         "cantidad": 100,
         "precio": 1.5
         },*/
-        array_productos.forEach((post) => {
-            let register = document.createElement("div")
-            register.setAttribute("class", "divCard")
-            register.innerHTML = `
-                <h3>Nombre: ${post.nombre}</h3>
-                <p>ID: ${post.id}</p>
-                <p>Cantidad: ${post.cantidad}</p>
-                <p>Precio: ${post.precio}</p>
-            `;
-            postsProducts.append(register);
-        })
+        mostrarInterfazProductos();
     })
     .catch( (error) => {
         Swal.fire({
             title: "?",
             text: "A ocurrido error al cargar los productos",
             icon: "question"
-          });
+        });
     })
     .finally(()=>{
         guardarProductos();
     });
 
-// 2) Mostramos Categorias
+// 2) Cargamos Categorias
 let postsCategories = document.getElementById("mostrarCategorias") 
 fetch('/mocks/categorias.json')
     .then((response) => response.json())
     .then((data) => {
-        array_categorias = data.map(cat => new Categoria(cat.nombre));
-        array_categorias_productos = data.map(cat => (cat.array_productos));
-        for (let i = 0; i < array_categorias.length; i++) {
+        cargarCategorias()
+        let array_categorias_JSON = data.map(cat => new Categoria(cat.nombre));
+        let array_categorias_productos = data.map(cat => (cat.array_productos));
+        for (let i = 0; i < array_categorias_JSON.length; i++) {
             if (array_categorias_productos[i]) {
-                array_categorias[i].array_productos = array_categorias_productos[i]; // Asiganmos a la primer categoria el array de sus productos correspndientes. Asi sucesivamente.
+                array_categorias_JSON[i].array_productos = array_categorias_productos[i]; // Asiganmos a la primer categoria el array de sus productos correspndientes. Asi sucesivamente.
+            }
+            else{
+                array_categorias_JSON.array_productos = []
             }
         }
+        array_categorias_JSON.forEach((categoria_json)=>{
+            if (!array_categorias.some(categoria_storage => categoria_storage.nombre === categoria_json.nombre)) {
+                array_categorias.push(categoria_json)
+            }
+        })
         console.log("--> Datos decodificados <--", data);
         /* {
         "nombre": "Frutas",
@@ -110,20 +152,7 @@ fetch('/mocks/categorias.json')
             },
         ]
         },*/
-        array_categorias.forEach((post) => {
-            let register = document.createElement("div")
-            register.setAttribute("class", "divCard")
-            register.innerHTML = `
-                <h2>Categoria: ${post.nombre}</h2>
-                <h3>Productos en la Categoria:</h3>
-            `;
-            post.array_productos.forEach((producto) =>{
-                register.innerHTML += `
-                    <p>Producto: ${producto.nombre}</p>
-                `;
-            })
-            postsCategories.append(register);
-        })
+        mostrarInterfazCategorias()
     })
     .catch( (error) => {
         Swal.fire({
@@ -135,10 +164,6 @@ fetch('/mocks/categorias.json')
     .finally(()=>{
         guardarCategorias();
     });
-
-// Cargamos del localStorage los productos y categorias (si es que hubieran)
-cargarCategorias();
-cargarProductos();
 
 // Cuando el formulario de opciones sea enviado (submit) verificamos cual fue la opcion enviada
 formularioOpcion.addEventListener("submit", (event)=>{
@@ -159,7 +184,7 @@ formularioOpcion.addEventListener("submit", (event)=>{
 
     switch (opcion) {
         // Si es la opcion "1", entonces creamos un formulario dentro del contenedor formulario con los campos necesarios (nombre de la categoria)
-        case "1":
+        case "1":   // agregar categoria
             // Asignamos el formulario dentro del contenedor (que es la section)
             contenedorNuevoFormulario.append(formulario);
             form = document.getElementById("formulario-dinamico")
@@ -177,6 +202,12 @@ formularioOpcion.addEventListener("submit", (event)=>{
                 // Actualizamos los arrays de productos y categorias en el localStorage
                 guardarProductos();
                 guardarCategorias();
+
+                // Recargamos el HTML
+                mostrarInterfazProductos();
+                mostrarInterfazCategorias();
+
+                // Mensaje de confirmacion
                 Toastify({
                     text: "Categoria creada",
                     duration: 3000,
@@ -186,7 +217,7 @@ formularioOpcion.addEventListener("submit", (event)=>{
                 }).showToast();
             })
             break;
-        case "2":
+        case "2":   // agregar producto
             contenedorNuevoFormulario.append(formulario);
             form = document.getElementById("formulario-dinamico")
             formulario.innerHTML = `
@@ -216,10 +247,14 @@ formularioOpcion.addEventListener("submit", (event)=>{
                     backgroundColor: "red",
                 }).showToast();
                 formulario.remove();    // eliminamos el formulario luego de usarlo para que se vuyelva a generar cuando sea encesario
+
+                // Actualizamos los arrays de productos y categorias
+                guardarProductos();
+                guardarCategorias();
+                // Recargamos el HTML
+                mostrarInterfazProductos();
+                mostrarInterfazCategorias();
             })
-            // Actualizamos los arrays de productos y categorias
-            guardarProductos();
-            guardarCategorias();
             break;
         case "3":       
             // Crear el título de productos
@@ -298,6 +333,9 @@ formularioOpcion.addEventListener("submit", (event)=>{
                 // Actualizamos los arrays de productos y categorias
                 guardarProductos();
                 guardarCategorias();
+                // Recargamos el HTML
+                mostrarInterfazProductos();
+                mostrarInterfazCategorias();
             });
             
             break;
@@ -339,6 +377,9 @@ formularioOpcion.addEventListener("submit", (event)=>{
             // Actualizamos los arrays de productos y categorias
             guardarProductos();
             guardarCategorias();
+            // Recargamos el HTML
+            mostrarInterfazProductos();
+            mostrarInterfazCategorias();
             break;
         default:
             Swal.fire({

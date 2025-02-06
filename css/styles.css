@@ -105,3 +105,7 @@ body, html, main{
     border: 2px solid black;
     padding-left: 15px;
 }
+
+.margenFooter{
+    height: 50px;
+}
