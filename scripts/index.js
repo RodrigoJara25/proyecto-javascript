@@ -147,12 +147,6 @@ fetch('/mocks/categorias.json')
         guardarCategorias();
     });
 
-// Creamos un formulario cada vez que se seleccione una opcion
-let formulario = document.createElement("form");
-formulario.setAttribute("id", "formulario-dinamico")
-contenedorNuevoFormulario.append(formulario);
-let form = ""
-
 // Resetamos e; html de los fomrularios
 const btnReset = document.getElementById("btnReset");
 btnReset.addEventListener("click", (event)=>{
@@ -168,6 +162,10 @@ const btnEliminarProducto = document.getElementById("eliminarProducto");
 
 btnCrearCategoria.addEventListener("click", (e)=>{
     e.preventDefault();
+    let formulario = document.createElement("form");
+    formulario.setAttribute("id", "formulario-dinamico")
+    contenedorNuevoFormulario.append(formulario);
+    let form = ""
     // Asignamos el formulario dentro del contenedor (que es la section)
     contenedorNuevoFormulario.append(formulario);
     form = document.getElementById("formulario-dinamico")
@@ -202,6 +200,10 @@ btnCrearCategoria.addEventListener("click", (e)=>{
 
 btnCrearProducto.addEventListener("click", (e) => {
     e.preventDefault();
+    let formulario = document.createElement("form");
+    formulario.setAttribute("id", "formulario-dinamico")
+    contenedorNuevoFormulario.append(formulario);
+    let form = ""
     contenedorNuevoFormulario.append(formulario);
             form = document.getElementById("formulario-dinamico")
             formulario.innerHTML = `
@@ -240,6 +242,10 @@ btnCrearProducto.addEventListener("click", (e) => {
 
 btnAgregarProducto.addEventListener("click", (e)=>{
     e.preventDefault();
+    let formulario = document.createElement("form");
+    formulario.setAttribute("id", "formulario-dinamico")
+    contenedorNuevoFormulario.append(formulario);
+    let form = ""
     // Crear el título de productos
     let tituloProductos = document.createElement("h2");
     tituloProductos.textContent = "Productos";
@@ -316,6 +322,10 @@ btnAgregarProducto.addEventListener("click", (e)=>{
 
 btnEliminarProducto.addEventListener("click", (e)=>{
     e.preventDefault();
+    let formulario = document.createElement("form");
+    formulario.setAttribute("id", "formulario-dinamico")
+    contenedorNuevoFormulario.append(formulario);
+    let form = ""
     let listaCategorias2 = document.createElement("ul") 
             contenedorNuevoFormulario.append(listaCategorias2);
         

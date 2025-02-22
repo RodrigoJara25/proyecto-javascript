@@ -7,7 +7,6 @@ section{
 
 .container-div-principal{
     width: 50%;
-    border: 2px solid black;
     padding-bottom: 30px;
     padding-left: 20px;
 }
@@ -204,14 +203,77 @@ body, html, main{
     transform: scale(1.05); 
 }
 
-/* formulario donde s evan a mostrar las opciones */
+/* Estilos del Formulario donde s evan a mostrar los inputs */
+/* Estilos generales */
 #formulario-opciones {
-    background-color: #ffebeb; 
-    padding: 20px;
-    margin: 20px auto;
-    border-radius: 15px;
     width: 80%;
-    max-width: 600px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    min-height: 50px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para formularios dinámicos */
+#formulario-dinamico {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    border: 1px solid #cc0000;
+}
+
+/* Estilos para los inputs */
+#formulario-dinamico input {
+    padding: 10px;
+    border: 1px solid #cc0000;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+#formulario-dinamico input:focus {
+    outline: none;
+    border-color: #ff0000;
+    box-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+}
+
+/* Estilos para botones */
+#formulario-dinamico button {
+    background-color: #cc0000;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#formulario-dinamico button:hover {
+    background-color: #990000;
+}
+
+/* Estilos para listas de categorías y productos */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li.categorias, li.productos {
+    background: #ffcccc;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    font-size: 16px;
+}
+
+/* Estilos para títulos */
+h2 {
+    color: #cc0000;
+    font-size: 20px;
+    border-bottom: 2px solid #ff0000;
+    padding-bottom: 5px;
 }
