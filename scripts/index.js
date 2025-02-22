@@ -1,11 +1,4 @@
-console.log("Empezamos el sistema")
-
-// ============================= CLASES =============================
-// Clase Producto (id (static), nombre, cantidad, precio)
-// Clase Categoria (nombre)
-
 // ============================= FUNCIONES =============================
-// Crear un Producto
 function crearProducto(){
     let nombre = document.getElementById("nombre-producto").value
     let cantidad = document.getElementById("cantidad-producto").value;
@@ -14,13 +7,11 @@ function crearProducto(){
     return producto;
 }
 
-// Crear Categoria de Producto
 function crearCategoria(){
     let nombre = document.getElementById("nombre-categoria").value;
     const categoria = new Categoria(nombre);
     return categoria;
 }
-
 
 function mostrarInterfazProductos(){
     postsProducts.innerHTML = "";
@@ -68,7 +59,6 @@ let array_categorias = []
 let array_productos = []
 
 // ============================= EJECUCION DEL CODIGO =============================
-// alert("Bienvenido al sistema de inventario")
 
 // Seleccionamos el formulario donde se marca la opcion que se quiere hacer
 let formularioOpcion = document.getElementById("formulario-opcion")
@@ -307,14 +297,7 @@ formularioOpcion.addEventListener("submit", (event)=>{
         
                 let nombre_categoria = document.getElementById("nombre-categoria").value;
                 let categoria_elegida = array_categorias.find((categoria) => categoria.nombre == nombre_categoria);
-        
-                /* if (!producto_elegido || !categoria_elegida) {
-                    // No existe la categoría o el producto
-                    alert("Categoría o Producto no existente");
-                } else {
-                    // Agregamos el producto a la categoría elegida
-                    categoria_elegida.ingresarProducto(producto_elegido);
-                } */
+
                 (!producto_elegido || !categoria_elegida)  
                     ? Swal.fire({
                         icon: "error",
@@ -374,12 +357,6 @@ formularioOpcion.addEventListener("submit", (event)=>{
                     listaCategorias2.remove()   
                 }
                 formulario.remove();  // Eliminamos el formulario luego de usarlo para que se vuelva a generar cuando sea necesario
-                /* // Actualizamos los arrays de productos y categorias
-                guardarProductos();
-                guardarCategorias();
-                // Recargamos el HTML
-                mostrarInterfazProductos();
-                mostrarInterfazCategorias(); */
             });
             break;
         default:
