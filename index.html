@@ -15,55 +15,51 @@
         
     </header>
     <main>
-        <h1 class="titulo">Productos</h1>
+        <h1 class="tituloPrincipal">SISTEMA DE INVENTARIO</h1>
+        <h2 class="tituloSecundario">Productos</h2>
         <section id="mostrarProductos" class="mostrarCard">
             
         </section>
-        <h1 class="titulo">Categorias</h1>
+        <h2 class="tituloSecundario">Categorias</h2>
         <section id="mostrarCategorias" class="mostrarCard">
 
         </section>
-        <h1 class="titulo">OPCIONES</h1>
-        <section>
+        <h2 class="tituloSecundario">OPCIONES</h2>
+        <section class="section">
             <div class="container-div-principal">
-                <h2>Crear</h2>
+                <h2 class="subtitulo">Crear</h2>
                 <div class="container-div">
                     <div class="div-card">
-                        <p>1. Crear una categoria</p>
+                        <button id="crearCategoria" class="boton">Crear una categoria</button>
                     </div>
                     <div class="div-card">
-                        <p>2. Crear un producto</p>
+                        <button id="crearProducto" class="boton">Crear un producto</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section">
+            <div class="container-div-principal">
+                <h2 class="subtitulo">Agregar</h2>
+                <div class="container-div">
+                    <div class="div-card">
+                        <button id="agregarProducto" class="boton">Agregar producto a una categoria</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section">
+            <div class="container-div-principal">
+                <h2 class="subtitulo">Eliminar</h2>
+                <div class="container-div">
+                    <div class="div-card">
+                        <button id="eliminarProducto" class="boton">Eliminar producto de una categoria</button>
                     </div>
                 </div>
             </div>
         </section>
         <section>
-            <div class="container-div-principal">
-                <h2>Agregar</h2>
-                <div class="container-div">
-                    <div class="div-card">
-                        <p>3. Agregar producto a una categoria</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section>
-            <div class="container-div-principal">
-                <h2>Eliminar</h2>
-                <div class="container-div">
-                    <div class="div-card">
-                        <p>4. Eliminar producto de una categoria</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section>
-            <form action="" class="form-option" id="formulario-opcion">
-                <label for="opcion">Elija la opcion (numero):</label>
-                <input type="text" id="opcion">
-                <button type="submit">Enviar</button>
-                <button type="reset">Resetear</button>
-            </form>
+            <button id="btnReset" type="reset">Resetear</button>
         </section>
         <section id="formulario-opciones">
 

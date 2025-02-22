@@ -1,10 +1,4 @@
 /* Pagina Index */
-
-
-.titulo{
-    text-align: center;
-}
-
 section{
     width: 100%;
     display: flex;
@@ -17,23 +11,17 @@ section{
     padding-bottom: 30px;
     padding-left: 20px;
 }
-
+/* 
 .container-div{
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
-}
-
-.div-card{
-    border: 2px solid black;
-    padding: 10px;
-}
+} */
 
 .form-option{
     margin-top: 30px;
     margin-bottom: 50px;
 }
-
 
 
 
@@ -93,19 +81,137 @@ body, html, main{
 }
 
 
+/* Index */
+
 .mostrarCard{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
     gap: 20px;
+    width: 70%;
+    margin: auto;
+    background-color: red;
+    padding: 50px;
+    border: 2px solid #2ecc71; 
+    border-radius: 20px;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .divCard{
     width: 150px;
-    border: 2px solid black;
     padding-left: 15px;
+
+    border-radius: 25px;
+    padding: 15px;
+    border: 3px solid transparent;
+    background: linear-gradient(white, white) padding-box,
+                linear-gradient(45deg, #ff9a9e, #fad0c4) border-box;
 }
 
 .margenFooter{
     height: 50px;
+}
+
+.tituloPrincipal{
+    font-size: 36px;            
+    font-weight: bold;         
+    color: #d32f2f;            
+    text-align: center;        
+    margin-bottom: 20px;        
+    padding: 10px;              
+    background-color: white;   
+    border-radius: 10px;        
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2); 
+}
+
+.tituloSecundario{
+    font-size: 28px;            
+    font-weight: bold;          
+    color: #ffffff;             
+    text-align: center;        
+    text-transform: uppercase;  
+    letter-spacing: 1.5px;      
+    margin-bottom: 15px;        
+    padding: 10px;              
+    background-color: #d32f2f;  
+    border-radius: 8px;         
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2); 
+}
+
+.section{
+    background-color: #ffebeb; 
+    padding: 20px;
+    margin: 20px auto;
+    border-radius: 15px;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.subtitulo{
+    text-align: center;
+    font-size: 20px;
+    color: #bf0000; 
+    margin-bottom: 10px;
+}
+
+.boton{
+    background-color: #d00000; 
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.boton:hover {
+    background-color: #a30000; 
+}
+
+.div-card {
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.container-div {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+/* boton reset */
+#btnReset {
+    display: block;
+    background-color: #d00000; 
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    margin: 20px auto; 
+}
+
+#btnReset:hover {
+    background-color: #a30000; 
+    transform: scale(1.05); 
+}
+
+/* formulario donde s evan a mostrar las opciones */
+#formulario-opciones {
+    background-color: #ffebeb; 
+    padding: 20px;
+    margin: 20px auto;
+    border-radius: 15px;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    min-height: 50px;
 }
