@@ -1,4 +1,3 @@
-// ============================= FUNCIONES =============================
 function crearProducto(){
     let nombre = document.getElementById("nombre-producto").value
     let cantidad = document.getElementById("cantidad-producto").value;
@@ -46,43 +45,21 @@ function mostrarInterfazCategorias(){
     })
 }
 
-// ============================ Storage y JSON ========================
-// cargarProductos()
-// guardarProductos()
-// cargarCategorias()
-// guardarCategorias()
-
-// ============================= VARIABLES =============================
-// Array de las Categorias creadas
 let array_categorias = []
-// Array de los Productos creados
 let array_productos = []
-
-// ============================= EJECUCION DEL CODIGO =============================
-// Preparamos el formulario que se va a generar segun la opcion que se elija de manera dinamica
 let contenedorNuevoFormulario = document.getElementById("formulario-opciones");
 
-// Cargamos los datos de la "API" y los mostramos en la interfaz
-
-// 1) Cargamos Prodcutos
 let postsProducts = document.getElementById("mostrarProductos") 
 fetch('/mocks/productos.json')
     .then((response) => response.json())
     .then((data) => {
         cargarProductos();
-        // let array_productos_JSON = data.map(prod => new Producto(prod.nombre, prod.cantidad, prod.precio));
         let array_productos_JSON = data;
         array_productos_JSON.forEach((producto_json)=>{
             if (!array_productos.some(producto_storage => producto_storage.nombre === producto_json.nombre)) {
                 array_productos.push(new Producto(producto_json.nombre, producto_json.cantidad, producto_json.precio))
             }
         })
-        /* {
-        "id": 0,
-        "nombre": "Manzana",
-        "cantidad": 100,
-        "precio": 1.5
-        },*/
         mostrarInterfazProductos();
     })
     .catch( (error) => {
@@ -96,7 +73,6 @@ fetch('/mocks/productos.json')
         guardarProductos();
     });
 
-// 2) Cargamos Categorias
 let postsCategories = document.getElementById("mostrarCategorias") 
 fetch('/mocks/categorias.json')
     .then((response) => response.json())
@@ -106,7 +82,7 @@ fetch('/mocks/categorias.json')
         let array_categorias_productos = data.map(cat => (cat.array_productos));
         for (let i = 0; i < array_categorias_JSON.length; i++) {
             if (array_categorias_productos[i]) {
-                array_categorias_JSON[i].array_productos = array_categorias_productos[i]; // Asiganmos a la primer categoria el array de sus productos correspndientes. Asi sucesivamente.
+                array_categorias_JSON[i].array_productos = array_categorias_productos[i]; 
             }
             else{
                 array_categorias_JSON.array_productos = []
@@ -117,23 +93,6 @@ fetch('/mocks/categorias.json')
                 array_categorias.push(categoria_json)
             }
         })
-        /* {
-        "nombre": "Frutas",
-        "array_productos": [
-            {
-                "id": 0,
-                "nombre": "Manzana",
-                "cantidad": 100,
-                "precio": 1.5
-            },
-            {
-                "id": 1,
-                "nombre": "Banana",
-                "cantidad": 150,
-                "precio": 0.9
-            },
-        ]
-        },*/
         mostrarInterfazCategorias()
     })
     .catch( (error) => {
@@ -147,14 +106,12 @@ fetch('/mocks/categorias.json')
         guardarCategorias();
     });
 
-// Resetamos e; html de los fomrularios
 const btnReset = document.getElementById("btnReset");
 btnReset.addEventListener("click", (event)=>{
     event.preventDefault();
     contenedorNuevoFormulario.innerHTML = "";
 })
 
-// Recibo todos los botones de opciones
 const btnCrearCategoria = document.getElementById("crearCategoria");
 const btnCrearProducto = document.getElementById("crearProducto");
 const btnAgregarProducto = document.getElementById("agregarProducto");
@@ -166,28 +123,25 @@ btnCrearCategoria.addEventListener("click", (e)=>{
     formulario.setAttribute("id", "formulario-dinamico")
     contenedorNuevoFormulario.append(formulario);
     let form = ""
-    // Asignamos el formulario dentro del contenedor (que es la section)
+
     contenedorNuevoFormulario.append(formulario);
     form = document.getElementById("formulario-dinamico")
     formulario.innerHTML = `<label for="nombre-categoria">Nombre de la Categoría</label>
                             <input type="text" id="nombre-categoria" name="nombre-categoria" placeholder="Ingrese el nombre de la categoría" required>
                             <button type="submit">Guardar</button>`
-    // Cuando ese nuevo formulario dinamico sea enviado (submit), creamos la categoria con sus datos
+   
     form.addEventListener("submit", (event) => {
         event.preventDefault()
         let categoria = crearCategoria();
         array_categorias.push(categoria);
-        formulario.remove();    // eliminamos el formulario luego de usarlo para que se vuyelva a generar cuando sea encesario
+        formulario.remove();    
 
-        // Actualizamos los arrays de productos y categorias en el localStorage
         guardarProductos();
         guardarCategorias();
 
-        // Recargamos el HTML
         mostrarInterfazProductos();
         mostrarInterfazCategorias();
 
-        // Mensaje de confirmacion
         Toastify({
             text: "Categoria creada",
             duration: 3000,
@@ -229,12 +183,11 @@ btnCrearProducto.addEventListener("click", (e) => {
                     position: "right",
                     backgroundColor: "red",
                 }).showToast();
-                formulario.remove();    // eliminamos el formulario luego de usarlo para que se vuyelva a generar cuando sea encesario
+                formulario.remove();    
 
-                // Actualizamos los arrays de productos y categorias
                 guardarProductos();
                 guardarCategorias();
-                // Recargamos el HTML
+
                 mostrarInterfazProductos();
                 mostrarInterfazCategorias();
             })
@@ -246,7 +199,7 @@ btnAgregarProducto.addEventListener("click", (e)=>{
     formulario.setAttribute("id", "formulario-dinamico")
     contenedorNuevoFormulario.append(formulario);
     let form = ""
-    // Crear el título de productos
+    
     let tituloProductos = document.createElement("h2");
     tituloProductos.textContent = "Productos";
     contenedorNuevoFormulario.append(tituloProductos);
@@ -258,7 +211,6 @@ btnAgregarProducto.addEventListener("click", (e)=>{
         listaProductos.innerHTML += `<li class="productos">${producto.informacionProducto()}</li>`;
     });
 
-    // Crear el título de categorías
     let tituloCategorias = document.createElement("h2");
     tituloCategorias.textContent = "Categorías";
     contenedorNuevoFormulario.append(tituloCategorias);
@@ -270,7 +222,6 @@ btnAgregarProducto.addEventListener("click", (e)=>{
         listaCategorias.innerHTML += `<li class="categorias">${categoria.nombre}</li>`;
     });
 
-    // Crear el formulario
     contenedorNuevoFormulario.append(formulario);
     form = document.getElementById("formulario-dinamico");
 
@@ -306,7 +257,7 @@ btnAgregarProducto.addEventListener("click", (e)=>{
             : categoria_elegida.ingresarProducto(producto_elegido);
 
 
-        formulario.remove();  // Eliminamos el formulario luego de usarlo para que se vuelva a generar cuando sea necesario
+        formulario.remove();  
         listaCategorias.remove();
         tituloCategorias.remove();
         listaProductos.remove();

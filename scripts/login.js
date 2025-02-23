@@ -13,7 +13,6 @@ formulario.addEventListener("submit", (event) => {
     
     const cantidadIntentos = document.getElementById("cantidad-intentos")
 
-    // Verifica el intento
     if (password_ingresada === password_real && usuario_real === usuario) {
         window.location.href = "../index.html"; 
     } else {

@@ -1,9 +1,9 @@
 class Producto{
     static id = 0;
 
-    nombre = "";        // string
-    cantidad = 0;       // int
-    precio = 0;         // float
+    nombre = "";        
+    cantidad = 0;       
+    precio = 0;         
 
     constructor(nombre, cantidad, precio, id=null) {
         if (id === null) {
