@@ -119,6 +119,7 @@ const btnEliminarProducto = document.getElementById("eliminarProducto");
 
 btnCrearCategoria.addEventListener("click", (e)=>{
     e.preventDefault();
+    contenedorNuevoFormulario.innerHTML = "";
     let formulario = document.createElement("form");
     formulario.setAttribute("id", "formulario-dinamico")
     contenedorNuevoFormulario.append(formulario);
@@ -129,7 +130,7 @@ btnCrearCategoria.addEventListener("click", (e)=>{
     formulario.innerHTML = `<label for="nombre-categoria">Nombre de la Categoría</label>
                             <input type="text" id="nombre-categoria" name="nombre-categoria" placeholder="Ingrese el nombre de la categoría" required>
                             <button type="submit">Guardar</button>`
-   
+                            formulario.scrollIntoView({ behavior: "smooth", block: "start" });    
     form.addEventListener("submit", (event) => {
         event.preventDefault()
         let categoria = crearCategoria();
@@ -154,10 +155,13 @@ btnCrearCategoria.addEventListener("click", (e)=>{
 
 btnCrearProducto.addEventListener("click", (e) => {
     e.preventDefault();
+    contenedorNuevoFormulario.innerHTML = "";
+
     let formulario = document.createElement("form");
     formulario.setAttribute("id", "formulario-dinamico")
     contenedorNuevoFormulario.append(formulario);
     let form = ""
+
     contenedorNuevoFormulario.append(formulario);
             form = document.getElementById("formulario-dinamico")
             formulario.innerHTML = `
@@ -172,6 +176,7 @@ btnCrearProducto.addEventListener("click", (e) => {
 
                 <button type="submit">Guardar</button>
             `;
+            formulario.scrollIntoView({ behavior: "smooth", block: "start" });
             form.addEventListener("submit", (event) => {
                 event.preventDefault()
                 let producto = crearProducto();
@@ -195,6 +200,7 @@ btnCrearProducto.addEventListener("click", (e) => {
 
 btnAgregarProducto.addEventListener("click", (e)=>{
     e.preventDefault();
+    contenedorNuevoFormulario.innerHTML = "";
     let formulario = document.createElement("form");
     formulario.setAttribute("id", "formulario-dinamico")
     contenedorNuevoFormulario.append(formulario);
@@ -239,7 +245,7 @@ btnAgregarProducto.addEventListener("click", (e)=>{
 
         <button type="submit">Guardar</button>
     `;
-
+    formulario.scrollIntoView({ behavior: "smooth", block: "start" });
     form.addEventListener("submit", (event) => {
         event.preventDefault();
         let nombre_producto = document.getElementById("nombre-producto").value;
@@ -273,6 +279,7 @@ btnAgregarProducto.addEventListener("click", (e)=>{
 
 btnEliminarProducto.addEventListener("click", (e)=>{
     e.preventDefault();
+    contenedorNuevoFormulario.innerHTML = "";
     let formulario = document.createElement("form");
     formulario.setAttribute("id", "formulario-dinamico")
     contenedorNuevoFormulario.append(formulario);
@@ -293,6 +300,7 @@ btnEliminarProducto.addEventListener("click", (e)=>{
                 <input type="text" id="nombre-categoria" name="nombre-categoria" placeholder="Ingrese el nombre de la categoria" required><br>
                 <button type="submit">Guardar</button>
             `;
+            formulario.scrollIntoView({ behavior: "smooth", block: "start" });
             form.addEventListener("submit", (event) => {
                 event.preventDefault();
                 nombre_categoria = document.getElementById("nombre-categoria").value;
